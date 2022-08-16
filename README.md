@@ -1,5 +1,6 @@
 # JackTheBox
 JackTheBox allows for client & server modifications to s&box independent of the current gamemode (or even in the absence of a gamemode).
+- [View the demo presentation](https://streamable.com/fnbwvs) 👀
 
 # Guide
 1. Compile an addon (i.e. `example_addon`)
