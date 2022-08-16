@@ -1,0 +1,5 @@
+/target
+/Cargo.lock
+
+/example_addon/bin
+/example_addon/obj
