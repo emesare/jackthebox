@@ -21,9 +21,9 @@ jobs:
           toolchain: nightly
       - name: Build
         run: cargo build --release
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload to releases
+        uses: softprops/action-gh-release@v1
         with:
-          name: jackthebox.dll
-          path: |
+          tag_name: master
+          files: |
             target/release/jackthebox.dll
