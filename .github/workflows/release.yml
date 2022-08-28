@@ -21,10 +21,10 @@ jobs:
           toolchain: nightly
           target: x86_64-pc-windows-gnu
       - name: Build
-        run: cargo build --release
+        run: cargo build --release --target x86_64-pc-windows-gnu
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: jackthebox.dll
           path: |
-            target/release/jackthebox.dll
+            target/x86_64-pc-windows-gnu/release/jackthebox.dll
