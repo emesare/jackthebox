@@ -12,19 +12,18 @@ env:
 jobs:
   release-windows:
     name: Build & Release
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@master
       - name: Install rust toolchain
-        uses: dtolnay/rust-toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
           toolchain: nightly
-          target: x86_64-pc-windows-gnu
       - name: Build
-        run: cargo build --release --target x86_64-pc-windows-gnu
+        run: cargo build --release
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: jackthebox.dll
           path: |
-            target/x86_64-pc-windows-gnu/release/jackthebox.dll
+            target/release/jackthebox.dll
