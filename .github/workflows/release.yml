@@ -20,7 +20,7 @@ jobs:
         with:
           toolchain: nightly
       - name: Build
-        run: cargo build --release
+        run: cargo build --release --verbose
       - name: Upload to releases
         uses: softprops/action-gh-release@v1
         with:
