@@ -1,6 +1,6 @@
 [package]
 name = "jackthebox"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["dank <git@dank.anonaddy.com>"]
 edition = "2021"
 
@@ -15,8 +15,6 @@ strip = "symbols"
 
 [dependencies]
 log = "0.4"
-fern = { version = "0.6", features = ["colored"] }
-chrono = "0.4"
 
 [dependencies.windows]
 version = "0.39"

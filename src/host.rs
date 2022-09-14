@@ -1,6 +1,4 @@
-use std::{ffi::c_void, mem::transmute};
-
-use log::info;
+use std::ffi::c_void;
 
 use crate::c_str;
 
