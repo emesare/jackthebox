@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Install dotnet toolchain
-      - uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.x'
       - name: Install rust toolchain
