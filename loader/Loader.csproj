@@ -9,23 +9,4 @@
         <DefineConstants>SANDBOX;ADDON;DEBUG</DefineConstants>
     </PropertyGroup>
 
-    <!-- Copies all assemblies needed in below ItemGroup -->
-    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="powershell ./prebuild.ps1" />
-    </Target>
-
-    <ItemGroup>
-        <Analyzer Include="bin\Sandbox.Generator.dll"/>
-        <Reference Include="bin\Sandbox.System.dll" />
-        <Reference Include="bin\Sandbox.Engine.dll" />
-        <Reference Include="bin\Sandbox.Game.dll" />
-        <Reference Include="bin\Sandbox.Event.dll" />
-        <Reference Include="bin\Sandbox.Bind.dll" />
-        <Reference Include="bin\Sandbox.Reflection.dll" />
-        <Reference Include="bin\Sandbox.Menu.dll" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Using Include="Sandbox.Internal.GlobalGameNamespace" Static="true" />
-    </ItemGroup>
 </Project>

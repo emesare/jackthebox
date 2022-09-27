@@ -26,14 +26,14 @@ class AssemblyLoader
         if (AddAssembly(options))
         {
             // Get the loaded assembly.
-            foreach (FieldInfo rtfield in typeof(Sandbox.Internal.TypeLibrary).GetRuntimeFields())
+            foreach (FieldInfo rtfield in GetTypeLibraryType()?.GetRuntimeFields())
             {
                 if (rtfield.Name == "loadedAssemblies")
                 {
-                    Dictionary<string, Assembly>? loadedAssemblies = (Dictionary<string, Assembly>?)rtfield.GetValue(GetTypeLibraryInstance());
+                    Dictionary<string, Assembly>? loadedAssemblies = (Dictionary<string, Assembly>?)rtfield.GetValue(GetGlobalTypeLibraryInstance());
                     if (loadedAssemblies == null)
                     {
-                        Log.Error("Failed to get loadedAssemblies value!");
+                        Log.Error($"Failed to get loadedAssemblies value!");
                         break;
                     }
                     this.currentAssembly = loadedAssemblies[name];
@@ -43,7 +43,7 @@ class AssemblyLoader
         }
         else
         {
-            Log.Error("Failed to invoke AddAssembly!");
+            Log.Error($"Failed to invoke AddAssembly!");
         }
 
         return null;
@@ -53,18 +53,18 @@ class AssemblyLoader
     {
         if (this.currentAssembly == null) return;
 
-        MethodInfo? removeAssembly = typeof(Sandbox.Internal.TypeLibrary).GetRuntimeMethod("RemoveAssembly", new System.Type[] { typeof(Assembly) });
+        MethodInfo? removeAssembly = GetTypeLibraryType()?.GetRuntimeMethod("RemoveAssembly", new System.Type[] { typeof(Assembly) });
 
         if (removeAssembly == null)
         {
-            Log.Error("Failed to get method RemoveAssembly!");
+            Log.Error($"Failed to get method RemoveAssembly!");
             return;
         }
 
-        object? tlInstance = GetTypeLibraryInstance();
+        object? tlInstance = GetGlobalTypeLibraryInstance();
         if (tlInstance == null)
         {
-            Log.Error("Failed to get TypeLibrary instance!");
+            Log.Error($"Failed to get TypeLibrary instance!");
             return;
         }
 
@@ -75,7 +75,7 @@ class AssemblyLoader
     {
         // Find `AddAssembly`.
         MethodInfo? addAssembly = null;
-        foreach (MethodInfo method in typeof(Sandbox.Internal.TypeLibrary).GetRuntimeMethods())
+        foreach (MethodInfo method in GetTypeLibraryType()?.GetRuntimeMethods())
         {
             // Make sure we dont get `internal void AddAssembly(Assembly incoming, bool isDynamic)`.
             if (method.Name == "AddAssembly" && method.ReturnType == typeof(bool))
@@ -86,14 +86,14 @@ class AssemblyLoader
 
         if (addAssembly == null)
         {
-            Log.Error("Failed to find AddAssembly!");
+            Log.Error($"Failed to find AddAssembly!");
             return false;
         };
 
-        object? tlInstance = GetTypeLibraryInstance();
+        object? tlInstance = GetGlobalTypeLibraryInstance();
         if (tlInstance == null)
         {
-            Log.Error("Failed to get TypeLibrary instance!");
+            Log.Error($"Failed to get TypeLibrary instance!");
             return false;
         }
 
@@ -114,7 +114,7 @@ class AssemblyLoader
         }
         else
         {
-            Log.Error("Failed to find AssemblyRegistration!");
+            Log.Error($"Failed to find AssemblyRegistration!");
         }
 
         return null;
@@ -130,15 +130,20 @@ class AssemblyLoader
         }
         else
         {
-            Log.Error("Failed to find TrustedBinaryStream!");
+            Log.Error($"Failed to find TrustedBinaryStream!");
         }
 
         return null;
     }
 
-    private static object? GetTypeLibraryInstance()
+    private static object? GetGlobalTypeLibraryInstance()
     {
         System.Type? type = System.Type.GetType("Sandbox.Internal.GlobalGameNamespace, Sandbox.Game");
         return type?.GetRuntimeProperty("TypeLibrary")?.GetValue(null);
+    }
+
+    private static System.Type? GetTypeLibraryType()
+    {
+        return System.Type.GetType("Sandbox.Internal.TypeLibrary, Sandbox.Reflection");
     }
 }
