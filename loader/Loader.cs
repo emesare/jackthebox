@@ -28,6 +28,10 @@ public class Loader
                     if (name == null) continue;
                     // Realm found, create a watcher!
                     DirectoryInfo realmDir = new DirectoryInfo(AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"sideload\" + $"{name}\\");
+                    if (!realmDir.Exists)
+                    {
+                        realmDir.Create();
+                    }
                     Log.Info($"Realm {name.ToUpper()} found, creating watcher at {realmDir.FullName}");
                     watchers.Add(new RealmWatcher(name, realmDir, ctx));
                 }

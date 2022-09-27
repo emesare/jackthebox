@@ -18,11 +18,6 @@ class RealmWatcher : FileSystemWatcher
         this.dir = dir;
         this.loaders = new();
 
-        if (!dir.Exists)
-        {
-            dir.Create();
-        }
-
         // Load all assemblies in the dir path.
         foreach (FileInfo dllFile in dir.GetFiles("*.dll"))
         {
