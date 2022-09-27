@@ -1,27 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <LangVersion>10</LangVersion>
-    <Nullable>enable</Nullable>
-    <AssemblyName>Jackload</AssemblyName>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <DefineConstants>SANDBOX;ADDON;DEBUG</DefineConstants>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Jackload</AssemblyName>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <DefineConstants>SANDBOX;ADDON;DEBUG</DefineConstants>
+    </PropertyGroup>
 
-  <!-- Change these! -->
-  <ItemGroup>
-    <Analyzer Include="D:\SteamLibrary\steamapps\common\sbox\bin\managed\Sandbox.Generator.dll"/>
-    <Reference Include="D:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.System.dll" />
-    <Reference Include="D:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Engine.dll" />
-    <Reference Include="D:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Game.dll" />
-    <Reference Include="D:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Event.dll" />
-    <Reference Include="D:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Bind.dll" />
-    <Reference Include="D:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Reflection.dll" />
-    <Reference Include="D:\SteamLibrary\steamapps\common\sbox\bin\managed/Sandbox.Menu.dll" />
-  </ItemGroup>
+    <!-- Copies all assemblies needed in below ItemGroup -->
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="powershell ./prebuild.ps1" />
+    </Target>
 
-  <ItemGroup>
-    <Using Include="Sandbox.Internal.GlobalGameNamespace" Static="true" />
-  </ItemGroup>
+    <ItemGroup>
+        <Analyzer Include="bin\Sandbox.Generator.dll"/>
+        <Reference Include="bin\Sandbox.System.dll" />
+        <Reference Include="bin\Sandbox.Engine.dll" />
+        <Reference Include="bin\Sandbox.Game.dll" />
+        <Reference Include="bin\Sandbox.Event.dll" />
+        <Reference Include="bin\Sandbox.Bind.dll" />
+        <Reference Include="bin\Sandbox.Reflection.dll" />
+        <Reference Include="bin\Sandbox.Menu.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Sandbox.Internal.GlobalGameNamespace" Static="true" />
+    </ItemGroup>
 </Project>
