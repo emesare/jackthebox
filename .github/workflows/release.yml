@@ -2,9 +2,9 @@ name: Release
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ['master']
   pull_request:
-    branches: [ "master" ]
+    branches: ['master']
 
 env:
   CARGO_TERM_COLOR: always
@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.x'
-      - run: dotnet build loader
       - name: Install rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
